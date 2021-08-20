@@ -5,6 +5,8 @@ import (
 )
 
 func main() {
+	// 初始化 SQL
+	bootstrap.SetupDB()
 	// 初始化路由绑定
 	router := bootstrap.SetupRoute()
 
