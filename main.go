@@ -4,6 +4,7 @@ import (
 	"demo/bootstrap"
 	"demo/config"
 	c "demo/pkg/config"
+	"demo/pkg/logger"
 )
 
 func init() {
@@ -17,5 +18,6 @@ func main() {
 	// 初始化路由绑定
 	router := bootstrap.SetupRoute()
 
-	router.Run(":" + c.GetString("app.port"))
+	err := router.Run(":" + c.GetString("app.port"))
+	logger.LogError(err)
 }
