@@ -61,8 +61,6 @@ func (s *DemoController) List(c *gin.Context) {
 
 	db := model.DB.Table("demos")
 
-	db = db.Where("id = 6")
-
 	db, count := pagination.Paginate(db, param)
 
 	db = db.Order("id desc").
