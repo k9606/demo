@@ -2,12 +2,27 @@ package controllers
 
 import (
 	"demo/app/models/demo"
+	"demo/pkg/jwt"
 	"demo/pkg/model"
 	"demo/pkg/pagination"
 	"github.com/gin-gonic/gin"
 )
 
 type DemoController struct{}
+
+func (s *DemoController) Login(c *gin.Context) {
+
+	jwt.ParseToken()
+
+	m := demo.Demo{}
+	c.ShouldBind(&m)
+
+	model.DB.Create(&m)
+
+	c.JSON(200, gin.H{
+		"message": "Create",
+	})
+}
 
 func (s *DemoController) Create(c *gin.Context) {
 	m := demo.Demo{}
