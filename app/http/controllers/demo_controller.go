@@ -14,10 +14,11 @@ type DemoController struct{}
 
 func (s *DemoController) Login(c *gin.Context) {
 	token, err := jwt.GenerateToken()
+	logger.LogError(err)
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
-		"msg":  logger.LogError(err),
+		"msg":  "请求成功",
 		"data": gin.H{
 			"token": token,
 		},
