@@ -2,10 +2,13 @@ package routes
 
 import (
 	"demo/app/http/controllers"
+	"demo/app/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterApiRoutes(r *gin.Engine) {
+	r.Use(middlewares.Jwt())
+
 	demo := r.Group("/demo")
 	{
 		dc := new(controllers.DemoController)

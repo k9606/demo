@@ -1,23 +1,22 @@
 package jwt
 
 import (
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-module/carbon"
 )
 
+var mySigningKey = []byte("AllYourBase")
+
+type MyCustomClaims struct {
+	Foo string `json:"foo"`
+	jwt.StandardClaims
+}
+
 func GenerateToken() (string, error) {
-	mySigningKey := []byte("AllYourBase")
-
-	type MyCustomClaims struct {
-		Foo string `json:"foo"`
-		jwt.StandardClaims
-	}
-
-	// Create the Claims
 	claims := MyCustomClaims{
-		"bar",
+		"b55ar",
 		jwt.StandardClaims{
-			ExpiresAt: 15000,
+			ExpiresAt: carbon.Now().AddMinutes(1).Timestamp(),
 			Issuer:    "test",
 		},
 	}
@@ -28,21 +27,14 @@ func GenerateToken() (string, error) {
 	return ss, err
 }
 
-func ParseToken() {
-	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJleHAiOjE1MDAwLCJpc3MiOiJ0ZXN0In0.HE7fK0xOQwFEr4WDgRWj4teRPZ6i3GLwD5YCm6Pwu_c"
-
-	type MyCustomClaims struct {
-		Foo string `json:"foo"`
-		jwt.StandardClaims
-	}
-
+func ParseToken(tokenString string) (*MyCustomClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte("AllYourBase"), nil
+		return mySigningKey, nil
 	})
 
 	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
-		fmt.Printf("%v %v", claims.Foo, claims.StandardClaims.ExpiresAt)
+		return claims, nil
 	} else {
-		fmt.Println(err)
+		return nil, err
 	}
 }

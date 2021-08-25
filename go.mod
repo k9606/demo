@@ -9,6 +9,7 @@ require (
 	github.com/fatih/color v1.12.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.0 // indirect
 	github.com/gin-gonic/gin v1.7.4
+	github.com/golang-module/carbon v1.5.3
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/spf13/cast v1.4.1
 	github.com/spf13/viper v1.8.1
