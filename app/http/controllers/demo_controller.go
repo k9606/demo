@@ -3,24 +3,24 @@ package controllers
 import (
 	"demo/app/models/demo"
 	"demo/pkg/jwt"
+	"demo/pkg/logger"
 	"demo/pkg/model"
 	"demo/pkg/pagination"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type DemoController struct{}
 
 func (s *DemoController) Login(c *gin.Context) {
+	token, err := jwt.GenerateToken()
 
-	jwt.ParseToken()
-
-	m := demo.Demo{}
-	c.ShouldBind(&m)
-
-	model.DB.Create(&m)
-
-	c.JSON(200, gin.H{
-		"message": "Create",
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  logger.LogError(err),
+		"data": gin.H{
+			"token": token,
+		},
 	})
 }
 

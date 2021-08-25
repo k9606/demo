@@ -5,7 +5,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GenerateToken() {
+func GenerateToken() (string, error) {
 	mySigningKey := []byte("AllYourBase")
 
 	type MyCustomClaims struct {
@@ -24,7 +24,8 @@ func GenerateToken() {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	ss, err := token.SignedString(mySigningKey)
-	fmt.Printf("%v %v", ss, err)
+
+	return ss, err
 }
 
 func ParseToken() {
