@@ -1,23 +1,24 @@
 package jwt
 
 import (
+	c "demo/pkg/config"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/golang-module/carbon"
 )
 
-var mySigningKey = []byte("AllYourBase")
+var mySigningKey = []byte(c.GetString("app.key"))
 
 type MyCustomClaims struct {
-	Foo string `json:"foo"`
+	UID uint
 	jwt.StandardClaims
 }
 
-func GenerateToken() (string, error) {
+func GenerateToken(UID uint) (string, error) {
 	claims := MyCustomClaims{
-		"b55ar",
+		UID,
 		jwt.StandardClaims{
-			ExpiresAt: carbon.Now().AddMinutes(1).Timestamp(),
-			Issuer:    "test",
+			ExpiresAt: carbon.Now().AddHours(1).Timestamp(),
+			Issuer:    c.GetString("app.name"),
 		},
 	}
 

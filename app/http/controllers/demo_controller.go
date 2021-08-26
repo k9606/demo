@@ -13,7 +13,7 @@ import (
 type DemoController struct{}
 
 func (s *DemoController) Login(c *gin.Context) {
-	token, err := jwt.GenerateToken()
+	token, err := jwt.GenerateToken(9606)
 	logger.LogError(err)
 
 	c.JSON(http.StatusOK, gin.H{
@@ -26,8 +26,6 @@ func (s *DemoController) Login(c *gin.Context) {
 }
 
 func (s *DemoController) Create(c *gin.Context) {
-	// claims := c.MustGet("claims").(*jwt.CustomClaims)
-
 	m := demo.Demo{}
 	c.ShouldBind(&m)
 
@@ -35,6 +33,7 @@ func (s *DemoController) Create(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"message": "Create",
+		"UID":     c.MustGet("claims").(*jwt.MyCustomClaims).UID,
 	})
 }
 

@@ -7,12 +7,11 @@ import (
 )
 
 func RegisterApiRoutes(r *gin.Engine) {
-	r.Use(middlewares.Jwt())
+	r.POST("/login", new(controllers.DemoController).Login)
 
-	demo := r.Group("/demo")
+	demo := r.Group("/demo").Use(middlewares.Jwt())
 	{
 		dc := new(controllers.DemoController)
-		demo.POST("/login", dc.Login)
 		demo.POST("/create", dc.Create)
 		demo.POST("/delete", dc.Delete)
 		demo.POST("/read", dc.Read)
