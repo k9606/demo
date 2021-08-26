@@ -26,6 +26,8 @@ func (s *DemoController) Login(c *gin.Context) {
 }
 
 func (s *DemoController) Create(c *gin.Context) {
+	// claims := c.MustGet("claims").(*jwt.CustomClaims)
+
 	m := demo.Demo{}
 	c.ShouldBind(&m)
 

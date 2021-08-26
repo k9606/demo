@@ -32,9 +32,13 @@ func ParseToken(tokenString string) (*MyCustomClaims, error) {
 		return mySigningKey, nil
 	})
 
-	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
-		return claims, nil
-	} else {
+	if err != nil {
 		return nil, err
 	}
+
+	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
+		return claims, nil
+	}
+
+	return nil, err
 }
