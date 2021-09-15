@@ -2,7 +2,7 @@ package routes
 
 import (
 	"demo/app/http/controllers"
-	"demo/app/middlewares"
+	"demo/app/http/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
